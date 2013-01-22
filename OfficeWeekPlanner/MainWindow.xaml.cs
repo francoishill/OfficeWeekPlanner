@@ -21,6 +21,20 @@ namespace OfficeWeekPlanner
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		Implement the following static extension
+		public static class Extensions
+		{
+			public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+			{
+				int diff = dt.DayOfWeek - startOfWeek;
+				if (diff < 0)
+				{
+					diff += 7;
+				}
+				return dt.AddDays(-1 * diff).Date;
+			}
+		}
+
 		private const string cThisAppName = "OfficeWeekPlanner";
 		private const string cCurrentProjectName = "TestProject";//Just hardcoded for now
 
@@ -254,6 +268,27 @@ namespace OfficeWeekPlanner
 			}
 		}
 
+		private const string cWeekStartDateFoldernameDateFormat = "yyyy-MM-dd";
+		private string GetWeekStartDateFolderName()
+		{
+			return this.WeekStart.ToString(cWeekStartDateFoldernameDateFormat);
+		}
+
+		private string GetFilepathForThisDetailsFilename(string applicationName, string projectName)
+		{
+			return SettingsInterop.GetFullFilePathInLocalAppdata(cDetailsFileName, applicationName, projectName + "\\" + GetWeekStartDateFolderName());
+		}
+
+		private void SaveDetailsToTextFile(string applicationName, string projectName)
+		{
+			string textFilePath = GetFilepathForThisDetailsFilename(applicationName, projectName);
+			File.WriteAllLines(textFilePath, new string[]
+			{
+				"WeekStart" + this.WeekStart.ToString("yyyy-MM-dd"),
+				"NumberOfDaysInThisWeek=" + this.NumberOfDaysInThisWeek.ToString(),
+			});
+		}
+
 		private static bool SaveBlockToFolder(string folderFullPath, Block block)
 		{
 			/*
@@ -356,23 +391,29 @@ namespace OfficeWeekPlanner
 			//Format example: ...\MyProject\2013-01-10\Completed\1\"DescriptionBlock 1 contents"
 
 			//FN = FolderName
-			string weekStartdateFN = this.WeekStart.ToString("yyyy-MM-dd");
+			string weekStartdateFN = GetWeekStartDateFolderName();
+			this.SaveDetailsToTextFile(applicationName, projectName);
 
 			for (int i = 0; i < this.CompletedItems.Count; i++)
 			{
-				ObservableCollection<Block> blockList1 = this.CompletedItems[i].DescriptionBlocks;
+				string completedItemFolderName = i.ToString();//this.CompletedItems[i].GetValidFolderNameFromName();
+
+				OfficeCompletedTask completedItem = this.CompletedItems[i];
+				string folderpathForCompletedItem = SettingsInterop.GetFullFolderPathInLocalAppdata(
+					string.Format(@"{0}\{1}", weekStartdateFN, cCompletedFolderName, completedItemFolderName), applicationName, projectName);
+
+				ObservableCollection<Block> blockList1 = completedItem.DescriptionBlocks;
 				if (blockList1 == null || blockList1.Count == 0)
 					continue;
 
-				string completedItemFolderName = i.ToString();//this.CompletedItems[i].GetValidFolderNameFromName();
-				for (int j = 0; j < this.CompletedItems[i].DescriptionBlocks.Count; j++)
+				for (int j = 0; j < completedItem.DescriptionBlocks.Count; j++)
 				{
 					string descriptionBlockFolderName = j.ToString();
 					string relativePath 
 							= string.Format(@"{0}\{1}\{2}\{3}", weekStartdateFN, cCompletedFolderName, completedItemFolderName, descriptionBlockFolderName);
 					string curDescriptionBlockFolderPath
 							= SettingsInterop.GetFullFolderPathInLocalAppdata(relativePath, applicationName, projectName);
-					if (!SaveBlockToFolder(curDescriptionBlockFolderPath, this.CompletedItems[i].DescriptionBlocks[j]))
+					if (!SaveBlockToFolder(curDescriptionBlockFolderPath, completedItem.DescriptionBlocks[j]))
 						failedToSaveSomething = true;
 					if (failedToSaveSomething)
 						break;
