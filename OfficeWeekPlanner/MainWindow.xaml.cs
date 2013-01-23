@@ -21,20 +21,6 @@ namespace OfficeWeekPlanner
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		Implement the following static extension
-		public static class Extensions
-		{
-			public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
-			{
-				int diff = dt.DayOfWeek - startOfWeek;
-				if (diff < 0)
-				{
-					diff += 7;
-				}
-				return dt.AddDays(-1 * diff).Date;
-			}
-		}
-
 		private const string cThisAppName = "OfficeWeekPlanner";
 		private const string cCurrentProjectName = "TestProject";//Just hardcoded for now
 
@@ -179,11 +165,25 @@ namespace OfficeWeekPlanner
 
 		public OfficeWeekItem(DateTime WeekStart, int NumberOfDaysInThisWeek, ObservableCollection<OfficeCompletedTask> CompletedItems, ObservableCollection<OfficeTodoTask> TodoItems)
 		{
+			int implementBelow_StartOfWeek;//See below commented method 'StartOfWeek' inside 'static class Extensions', implement it
 			this.WeekStart = WeekStart;
 			this.NumberOfDaysInThisWeek = NumberOfDaysInThisWeek;
 			this.CompletedItems = CompletedItems;
 			this.TodoItems = TodoItems;
 		}
+
+		/*public static class Extensions
+		{
+			public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+			{
+				int diff = dt.DayOfWeek - startOfWeek;
+				if (diff < 0)
+				{
+					diff += 7;
+				}
+				return dt.AddDays(-1 * diff).Date;
+			}
+		}*/
 
 		/*public abstract class DescriptionChunk
 		{
