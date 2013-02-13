@@ -11,7 +11,8 @@
     <RootNamespace>OfficeWeekPlanner</RootNamespace>
     <AssemblyName>OfficeWeekPlanner</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -85,7 +86,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\TextblockDoubleclickTextbox.xaml">
+    <Page Include="..\..\SharedClasses\TextblockDoubleclickTextbox.xaml">
       <Link>TextblockDoubleclickTextbox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,38 +95,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\CalledFromService.cs">
-      <Link>CalledFromService.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\IconsInterop.cs">
-      <Link>IconsInterop.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\ImagesInterop.cs">
+    <Compile Include="..\..\SharedClasses\ImagesInterop.cs">
       <Link>ImagesInterop.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\Logging.cs">
-      <Link>Logging.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\SettingsInterop.cs">
-      <Link>SettingsInterop.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\TextblockDoubleclickTextbox.xaml.cs">
+    <Compile Include="..\..\SharedClasses\TextblockDoubleclickTextbox.xaml.cs">
       <Link>TextblockDoubleclickTextbox.xaml.cs</Link>
       <DependentUpon>TextblockDoubleclickTextbox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\UserMessages.cs">
-      <Link>UserMessages.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\UserMessages.designer.cs">
-      <Link>UserMessages.designer.cs</Link>
-      <DependentUpon>UserMessages.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\Win32Api.cs">
-      <Link>Win32Api.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\WPFHelper.cs">
-      <Link>WPFHelper.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -150,14 +125,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="..\..\..\..\..\..\..\Francois\Dev\VSprojects\SharedClasses\UserMessages.resx">
-      <Link>UserMessages.resx</Link>
-      <DependentUpon>UserMessages.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -166,6 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="app.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SharedClasses\_OwnAppsSharedDll\_OwnAppsSharedDll.csproj">
+      <Project>{5AA050A3-9D5F-4FEF-9071-BB5D87A7BE3F}</Project>
+      <Name>_OwnAppsSharedDll</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
